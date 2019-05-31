@@ -1,0 +1,83 @@
+react
+                用于构建用户页面的js库
+1.三个特点
+声明式：数据改变react能有效更新并正确的渲染组件
+组件化：组件逻辑用js编写而不是模板???可以在应用上传递数据，使得状态与dom分离
+一次学习随处编写：可以随时引用react来开发不用重写代码；react还可以使用node来进行服务器渲染；
+                使用react native开发原生的移动应用。
+
+2.前言
+简单组件：
+有状态组件：
+应用：
+在组件中使用外部插件：
+
+3.认识react
+环境:
+搭建本地环境步骤----(井字棋的例子中搭建的)
+               检查node版本（node -v:v8.11.3）
+               creat react app (npx create-react-app my-app  | cd my-app  | npm start)
+
+
+基础知识:
+react在开发过程中最常用的技术:
+深刻理解react的优势：
+
+第一课：概览
+1.react是什么?组件？井字棋游戏完善
+声明式；非常多的组件构成的ui页面；
+（1）react有很多不同类型的组件。从React.Component 的子类开始介绍
+ShoppingList是react的一个组件类，它下面扩张了React.Component子类，它只会渲染一些内置dom。
+组件接收参数props，通过render返回在页面上展示的层次结构，即render的返回值是dom（react元素/可以当成一个js对象，可保存在变量中，作为参数传递）
+，大多数开发的时候使用的是“JSX”，可以轻松书写这些结构。
+语法 <div /> 会被编译成 React.createElement('div')。
+（2）JSX
+在JSX中你可以任意使用js的表达式，只需要用一个大括号把表达式括起来。
+（3）react的初始代码在src/index.js
+在小游戏--井字棋中，index.js里面有三个渲染的组件，分别是：Square/Board/Game。那么交互呐？
+（4）通过props传递数据
+从Board父组件传递到Square子组件。
+（5）向组件添加交互功能
+Square子组件的button加点击事件进行交互。onClick={function(){alert('clink')}}
+或者改成onClick={()=>{alert('clink')}}箭头函数的形式。
+目的：点击Square组件使得方格里面出现‘X’。---使用state来实现
+解决:this.state可以储存方格的状态；向这个 class Square中添加一个构造函数，用来初始化 state。
+代码:constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
+然后更改Square组件中的render里面的button，onclick事件调用的this.setState，会在每次点击button的时候去通知
+react重新渲染Square组件。
+组件更新之后，Square 组件的 this.state.value 的值会变为 'X'，因此，我们在游戏棋盘上就能看见 X 了。点击任意一个方格，X 就会出现了。
+（6）开发者工具--React Devtools 
+2.游戏完善
+首先我们需要知道每一个Square组件的button标签都维护一个状态，可以用棋盘Board组件收集每个格子的state值，但是
+在重构的时候会很困难。最好的解决办法：直接将所有的 state 状态数据存储在 Board 父组件当中。之后 Board 组件
+可以将这些数据通过 props 传递给各个 Square 子组件，正如上文我们把数字传递给每一个 Square 一样。
+【注意】同时获取多个子组件数据，或者两个组件之间需要相互通讯的情况时：
+把子组件state状态值提升到共同的父组件中储存下来，之后再用props传递给子组件。
+（1）state提升至共同的父组件中---重构react【mark】
+给父组件添加构造函数，并设置state初始长度为9的空值数组。
+【注意】state对于每个组件来说是私有的，以此不能直接通过子组件来更新父组件的state。
+对子组件的监听函数进行修改，用子组件更新父组件的state。
+（2）从 Board 组件向 Square 组件传递一个函数，当 Square 被点击的时候，这个函数就会被调用
+此时Board组件中有两个传递的参数:state和onClick
+（3）修改Square的代码
+this.state.value改为this.props.value;this.setState()改为this.props.onClick()；
+删掉构造函数，因为这个组件已经不需要保存游戏的state状态了。
+【注意】在 React 中，有一个命名规范，通常会将代表事件的监听 prop 命名为 on[Event]，
+将处理事件的监听方法命名为 handle[Event] 这样的格式。
+流程:当子组件的button被点击时，会触发onClick事件，进而触发了传入其中的 this.props.onClick() 方法，
+然后触发的 Board 当中的 this.handleClick(i) 方法，
+（4）不可变性在react中非常重要----handleClick方法中的.slice()方法创建了一个squares数组
+
+
+
+
+
+
+
+
+

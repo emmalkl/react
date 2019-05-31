@@ -1,0 +1,13 @@
+reactjs
+单项数据/mvc(并不非常认为)/虚拟dom/
+1.reactjs 引入：
+    方法一： 直接在官网上 ‘一分钟用上 React’ 可选：下载完整示例（2KB zipped）
+    方法二： 可选：使用 React 和 JSX
+2.react入门小游戏---井字棋->搭建本地环境
+3.配置语法高亮：https://babeljs.io/docs/en/editors/
+4.笔记---第一课概览
+react是什么？
+react的React.Component 的子类。。不同类型的组件
+井字棋游戏的完善
+
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function a(arr){
+            var sum=0;
+            var M=0;
+            var min;
+            //对数组arr进行从小到大排列
+            function b(c, d) {
+            return c - d;
+            }
+            arr.sort(b);
+            console.log(arr);
+           for(var i=0;i<arr.length;i++){
+              sum+=arr[i];  
+           }
+           M=sum%3;
+           console.log(M);
+            if(M==0){
+                return sum/3;
+            }
+            else{
+                //找到比取余的M大的，最小的arr[i]
+                min=arr[0];
+                for(var j=0;j<arr.length;i++){
+                    console.log(1)
+                    if(arr[j]>=M && arr[j]<=min){
+                    min=arr[j];
+                    console.log(min);
+                    sum=sum-arr[j];
+                    return sum/3;
+                    // console.log(sum%3)
+                    break;
+                   }
+                }
+            }
+        }
+        console.log(a([3,6,5,1,8]));
+    </script>
+</body>
+</html>
