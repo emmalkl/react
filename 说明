@@ -9,5 +9,9 @@ reactjs
 react是什么？
 react的React.Component 的子类。。不同类型的组件
 井字棋游戏的完善
+井字棋游戏历史管理/时间回溯===history，history存放的是上一步的状态数组，具体可见image图片
+5.笔记---文档
+hello world
+JSX简介
 
 

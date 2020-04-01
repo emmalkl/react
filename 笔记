@@ -23,7 +23,7 @@ react
 react在开发过程中最常用的技术:
 深刻理解react的优势：
 
-第一课：概览
+第一课：概览--通过一个井字棋的小游戏对react进行初步认识
 1.react是什么?组件？井字棋游戏完善
 声明式；非常多的组件构成的ui页面；
 （1）react有很多不同类型的组件。从React.Component 的子类开始介绍
@@ -72,6 +72,93 @@ this.state.value改为this.props.value;this.setState()改为this.props.onClick()
 流程:当子组件的button被点击时，会触发onClick事件，进而触发了传入其中的 this.props.onClick() 方法，
 然后触发的 Board 当中的 this.handleClick(i) 方法，
 （4）不可变性在react中非常重要----handleClick方法中的.slice()方法创建了一个squares数组
+不可变性的重要性和优点：
+简化复杂的功能
+不可变性使得复杂的特性更容易实现。在后面的章节里，我们会实现一种叫做“时间旅行”的功能。“时间旅行”可以使我们回顾井字棋的历史步骤，并且可以“跳回”之前的步骤。这个功能并不是只有游戏才会用到——撤销和恢复功能在开发中是一个很常见的需求。不直接在数据上修改可以让我们追溯并复用游戏的历史记录。
+
+跟踪数据的改变
+如果直接修改数据，那么就很难跟踪到数据的改变。跟踪数据的改变需要可变对象可以与之改变之前的版本进行对比，这样整个对象树都需要被遍历一次。
+
+跟踪不可变数据的变化相对来说就容易多了。如果发现对象变成了一个新对象，那么我们就可以说对象发生改变了。
+
+确定在 React 中何时重新渲染
+不可变性最主要的优势在于它可以帮助我们在 React 中创建 pure components。我们可以很轻松的确定不可变数据是否发生了改变，从而确定何时对组件进行重新渲染。
+（5）函数组件：对于只包含render方法，不用管理state状态的组件，使用函数组件会更简单。
+（6）轮流落子：父组件的handleClick方法反转一下state状态的xIsNext布尔值，控制下一个玩家是谁？
+//下一步是哪个玩家
+    const status = 'Next player:'+ (this.state.xIsNext?'X':'O');
+【注意】后半部分加()
+（7）判断胜利方
+首先有一个判断胜利的函数calculateWinner，然后需要在父组件调用此函数来判断胜利方。
+依旧是修改两个地方，一个是棋盘上方的显示，在父组件的render方法中；另一个是点击方格的函数handleClick方法，
+这个方法需要实现由胜利者出现的时候以及某个方格被点击过的时候不做任何操作，直接return。
+3.时间回溯---返回上一步的操作
+由于react的不可变性，所以返回上一步的操作会显得简单许多，因为根本的底层数据没有发生改变。
+（1）保存历史记录---不可变性
+在官网上有一个history数组存储了所有squares历史数据数组。
+https://react.docschina.org/tutorial/tutorial.html#storing-a-history-of-moves
+（2）提升状态---需要确定应该在哪一个组件里保存 history 这个 state
+===需要在顶层Game组件展现一个历史步骤的列表，提升共同组件的方法。
+功能：访问history数据，因此放在顶层组件中；同时要把 Board 组件中的state状态交给Game组件管理。
+===怎么做?
+Game组件构造函数中初始化state///
+让 Board 组件从 Game 组件中接收 squares 和 onClick 这两个 props：
+具体步骤是删除 Board 组件中的 constructor 构造函数->把 Board 组件的 renderSquare 中的 this.state.squares[i] 替换为 this.props.squares[i]
+->把 Board 组件的 renderSquare 中的 this.handleClick(i) 替换为 this.props.onClick(i)///
+更新 Game 组件的 render 函数，使用最新一次历史记录来确定并展示游戏的状态：
+有两个事情要做，status显示；和 Board 组件写进dom中///
+移除Board组件中的相应代码///
+将handleClick函数放到顶层组件中，并修正其中的代码，因为在Game组件中的state状态改变了。
+（3）展示历史步骤记录---历史步骤列表
+在顶层组件的render函数中加入一个对history数组的遍历，使用的是map()方法，其中还要渲染一个li列表，此列表
+包含一个button标签，它上面绑定一个jumpto事件可以跳转到指定的历史步骤
+（4）key
+动态创建组件的唯一表示，用来区分不同的列表项和同级兄弟列表项
+（5）实现和总结
+实现请看index.js中的顶层组件的render方法.
+实现了：
+tic-tac-toe(三连棋)游戏的所有功能
+能够判定玩家何时获胜
+能够记录游戏进程
+允许玩家查看游戏的历史记录，也可以查看任意一个历史版本的游戏棋盘状态
+（6）进阶完善游戏：
+在游戏历史记录列表显示每一步棋的坐标，格式为 (列号, 行号)。
+在历史记录列表中加粗显示当前选择的项目。
+使用两个循环来渲染出棋盘的格子，而不是在代码里写死（hardcode）。
+添加一个可以升序或降序显示历史记录的按钮。
+每当有人获胜时，高亮显示连成一线的 3 颗棋子。
+当无人获胜时，显示一个平局的消息。
+
+
+第二课：文档---hello world
+ReactDOM.render(
+  <h1>Hello, world!</h1>,
+  document.getElementById('root')
+);
+
+第三课：文档---JSX简介
+eg. const element = <h1>Hello, world!</h1>;
+如上所示，诸如此类的被称为JSX，它们不是字符串也不是html，而是js的扩展语法。
+1.为什么使用JSX？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
