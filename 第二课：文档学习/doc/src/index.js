@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Clock from './Clock.js'
 //{} 通过大括号嵌入js表达式
 function formatName(user) {
   return user.firstName + ' ' + user.lastName;
@@ -29,6 +30,8 @@ const element = (
     <h2>定时器函数（元素渲染）It is {new Date().toLocaleTimeString()}.</h2>
   </div>
 );
+
+
 
 ReactDOM.render(
   element,

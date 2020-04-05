@@ -294,9 +294,48 @@ function sum(a, b) {
 
 第六课：文档---state&生命周期
 1.封装时间组件，每秒更新一次
+function Clock(props) {
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {props.date.toLocaleTimeString()}.</h2>
+    </div>
+  );
+}
+
+function tick() {
+  ReactDOM.render(
+    <Clock date={new Date()} />,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
+以上更新时钟组件的方式存在一些弊端，因为它每隔一秒都在重新渲染一遍，所以我们应当让组件自我更新。
+这时候使用的方法是---------state
+改进:
 
 
 
+
+2.将函数组件转换成 class 组件
+创建一个同名的 ES6 class，并且继承于 React.Component。
+添加一个空的 render() 方法。
+将函数体移动到 render() 方法之中。
+在 render() 方法中使用 this.props 替换 props。
+删除剩余的空函数声明。
+例如：
+class Clock extends Component {
+    render() {
+        return (
+            <div>
+                <h1>这是一个每秒自动更新一次的计时器</h1>
+                <h2>{props.date.toLocaleTimeString()}</h2>
+            </div>
+        );
+    }
+}
+3.向 class 组件中添加局部的 state
 
 
 
