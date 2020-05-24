@@ -396,7 +396,10 @@ react元素绑定事件：
 <button onClick={activateLasers}>
   Activate Lasers
 </button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> d70901352f2496446b59e7504736e293dd549cfd
 阻止默认行为的不同点（阻止链接打开）：
 传统的:通过return false就可以了
 <a href="#" onclick="console.log('The link was clicked.'); return false">
